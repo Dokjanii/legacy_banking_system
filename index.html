@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System</title>
+</head>
+<body>
+    <h2>Simple Banking System</h2>
+    
+    <h3>Add Account</h3>
+    <input id="username" placeholder="Username">
+    <input id="balance" placeholder="Balance">
+    <button onclick="addAccount()">Add</button>
+
+    <h3>Check Balance</h3>
+    <input id="checkUser" placeholder="Username">
+    <button onclick="getBalance()">Check</button>
+    <p id="balanceResult"></p>
+
+    <h3>Transfer Money</h3>
+    <input id="fromUser" placeholder="From">
+    <input id="toUser" placeholder="To">
+    <input id="amount" placeholder="Amount">
+    <button onclick="transfer()">Send</button>
+
+    <script>
+        function addAccount() {
+            fetch(`/bank/add?username=${username.value}&balance=${balance.value}`, { method: 'POST' })
+            .then(response => response.text())
+            .then(alert);
+        }
+
+        function getBalance() {
+            fetch(`/bank/balance/${checkUser.value}`)
+            .then(response => response.json())
+            .then(data => balanceResult.innerText = "Balance: " + data);
+        }
+
+        function transfer() {
+            fetch(`/bank/transfer?from=${fromUser.value}&to=${toUser.value}&amount=${amount.value}`, { method: 'POST' })
+            .then(response => response.text())
+            .then(alert);
+        }
+    </script>
+</body>
+</html>
